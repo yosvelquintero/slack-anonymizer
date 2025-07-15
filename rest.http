@@ -1,0 +1,66 @@
+### Slack Anonymizer API Testing
+### Base URL: http://localhost:3000
+
+### Health Check - Get API status and available endpoints
+GET http://localhost:3000/api/v1
+Accept: application/json
+
+###
+
+### Get All Messages - Retrieve all Slack messages
+GET http://localhost:3000/api/v1/messages
+Accept: application/json
+
+###
+
+### Get Anonymized Messages - Retrieve all messages with anonymized data
+GET http://localhost:3000/api/v1/messages/anonymized
+Accept: application/json
+
+###
+
+### Get Sentiment Analysis - Get detailed sentiment analysis of all messages
+GET http://localhost:3000/api/v1/sentiment
+Accept: application/json
+
+###
+
+### Get Message Statistics - Get comprehensive statistics about messages
+GET http://localhost:3000/api/v1/stats
+Accept: application/json
+
+###
+
+### Get Anonymized Message by Timestamp - Get specific message by timestamp with anonymized data
+GET http://localhost:3000/api/v1/messages/1736954100.000001/anonymized
+Accept: application/json
+
+###
+
+### Get Anonymized Message by Timestamp - Test with another message timestamp
+GET http://localhost:3000/api/v1/messages/1736954100.000002/anonymized
+Accept: application/json
+
+###
+
+### Get Anonymized Message by Timestamp - Test with message containing phone number
+GET http://localhost:3000/api/v1/messages/1736954100.000005/anonymized
+Accept: application/json
+
+###
+
+### Get Anonymized Message by Timestamp - Test with non-existent timestamp (should return 404)
+GET http://localhost:3000/api/v1/messages/1736954100.999999/anonymized
+Accept: application/json
+
+###
+
+### Access Swagger UI Documentation
+GET http://localhost:3000/docs
+Accept: text/html
+
+###
+
+### Access OpenAPI Specification
+GET http://localhost:3000/doc
+Accept: application/json

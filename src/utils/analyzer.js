@@ -89,6 +89,85 @@ const getSentiment = (text) => {
 };
 
 /**
+ * Performs detailed sentiment analysis on message text with confidence scoring.
+ * Uses predefined positive and negative word lists to determine sentiment and confidence.
+ * @param {string} text - The text to analyze.
+ * @returns {Object} Object containing sentiment, score, and confidence.
+ */
+const getSentimentWithConfidence = (text) => {
+  const positiveWords = [
+    'great',
+    'smoothly',
+    'hard work',
+    'love',
+    'amazing',
+    'excellent',
+    'fantastic',
+    'ready',
+    'good',
+    'thanks',
+    'wonderful',
+  ];
+  const negativeWords = [
+    'issue',
+    'disappointing',
+    '401 error',
+    'problem',
+    'critical',
+    'bug',
+    'urgent',
+    'error',
+    'issues',
+    'help',
+  ];
+  const lowerText = text.toLowerCase();
+  const words = text.split(/\s+/).length;
+
+  let score = 0;
+  let matchedWords = 0;
+
+  for (const word of positiveWords) {
+    if (lowerText.includes(word)) {
+      score++;
+      matchedWords++;
+    }
+  }
+  for (const word of negativeWords) {
+    if (lowerText.includes(word)) {
+      score--;
+      matchedWords++;
+    }
+  }
+
+  // Calculate confidence based on:
+  // 1. Number of sentiment words found relative to total words
+  // 2. Absolute score strength
+  // 3. Minimum confidence for neutral messages with no sentiment words
+
+  let confidence;
+  if (matchedWords === 0) {
+    // No sentiment words found - low confidence neutral
+    confidence = 0.3;
+  } else {
+    // Base confidence on word density and score strength
+    const wordDensity = matchedWords / words;
+    const scoreStrength = Math.abs(score) / matchedWords;
+    confidence = Math.min(0.5 + wordDensity * 0.3 + scoreStrength * 0.2, 0.95);
+  }
+
+  let sentiment;
+  if (score > 0) sentiment = 'positive';
+  else if (score < 0) sentiment = 'negative';
+  else sentiment = 'neutral';
+
+  return {
+    sentiment,
+    score,
+    confidence: Math.round(confidence * 100) / 100, // Round to 2 decimal places
+  };
+};
+
+/**
  * Generates a summary of sentiment across all messages.
  * @param {Array<Object>} messages - An array of message objects.
  * @returns {Object} An object with counts for each sentiment type (positive, negative, neutral).
@@ -261,7 +340,8 @@ export const getSentimentStats = (messages) => {
   const details = [];
 
   messages.forEach((message) => {
-    const sentiment = getSentiment(message.text);
+    const sentimentResult = getSentimentWithConfidence(message.text);
+    const sentiment = sentimentResult.sentiment;
 
     // Overall sentiment
     overall[sentiment]++;
@@ -285,8 +365,8 @@ export const getSentimentStats = (messages) => {
       channel: message.channel,
       text: message.text.substring(0, 100) + (message.text.length > 100 ? '...' : ''),
       sentiment: sentiment,
-      score: sentiment === 'positive' ? 1 : sentiment === 'negative' ? -1 : 0,
-      confidence: 0.8, // Simplified confidence score
+      score: sentimentResult.score,
+      confidence: sentimentResult.confidence,
     });
   });
 
@@ -301,8 +381,8 @@ export const getSentimentStats = (messages) => {
       timeline[hourKey] = { positive: 0, negative: 0, neutral: 0 };
     }
 
-    const sentiment = getSentiment(message.text);
-    timeline[hourKey][sentiment]++;
+    const sentimentResult = getSentimentWithConfidence(message.text);
+    timeline[hourKey][sentimentResult.sentiment]++;
   });
 
   return {

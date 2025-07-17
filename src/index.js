@@ -106,23 +106,6 @@ const messageByIdRoute = createRoute({
   },
 });
 
-const statsRoute = createRoute({
-  method: 'get',
-  path: '/api/v1/stats',
-  summary: 'Get message statistics',
-  description: 'Get comprehensive statistics about messages including user activity, channel activity, and keywords',
-  responses: {
-    200: {
-      content: {
-        'application/json': {
-          schema: StatsResponseSchema,
-        },
-      },
-      description: 'Message statistics',
-    },
-  },
-});
-
 const sentimentRoute = createRoute({
   method: 'get',
   path: '/api/v1/sentiment',
@@ -136,6 +119,23 @@ const sentimentRoute = createRoute({
         },
       },
       description: 'Sentiment analysis results',
+    },
+  },
+});
+
+const statsRoute = createRoute({
+  method: 'get',
+  path: '/api/v1/stats',
+  summary: 'Get message statistics',
+  description: 'Get comprehensive statistics about messages including user activity, channel activity, and keywords',
+  responses: {
+    200: {
+      content: {
+        'application/json': {
+          schema: StatsResponseSchema,
+        },
+      },
+      description: 'Message statistics',
     },
   },
 });
@@ -188,19 +188,19 @@ app.openapi(messageByIdRoute, (c) => {
   });
 });
 
-app.openapi(statsRoute, (c) => {
-  const stats = analyzeMessages(mockMessages);
-  return c.json({
-    success: true,
-    data: stats,
-  });
-});
-
 app.openapi(sentimentRoute, (c) => {
   const sentimentStats = getSentimentStats(mockMessages);
   return c.json({
     success: true,
     data: sentimentStats,
+  });
+});
+
+app.openapi(statsRoute, (c) => {
+  const stats = analyzeMessages(mockMessages);
+  return c.json({
+    success: true,
+    data: stats,
   });
 });
 

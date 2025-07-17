@@ -39,8 +39,8 @@ pnpm start
 - `GET /api/v1/messages` - Get all messages
 - `GET /api/v1/messages/anonymized` - Get anonymized messages
 - `GET /api/v1/messages/{ts}/anonymized` - Get specific anonymized message by timestamp
-- `GET /api/v1/stats` - Get comprehensive message statistics
 - `GET /api/v1/sentiment` - Get detailed sentiment analysis
+- `GET /api/v1/stats` - Get comprehensive message statistics
 - `GET /docs` - Interactive API documentation (Swagger UI)
 
 ## API Documentation

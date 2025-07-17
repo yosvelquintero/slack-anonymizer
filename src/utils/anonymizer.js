@@ -39,13 +39,13 @@ const anonymizeText = (text) => {
 
   // Replace credit card numbers (full and partial)
   anonymized = anonymized.replace(/\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b/g, '[CREDIT_CARD]');
-  anonymized = anonymized.replace(/\bending in \d{4}\b/g, 'ending in [REDACTED]');
+  anonymized = anonymized.replace(/\bending in \d{4}\b/g, '[CREDIT_CARD_PARTIAL]');
 
   // Replace SSNs
   anonymized = anonymized.replace(/\b\d{3}-\d{2}-\d{4}\b/g, '[SSN]');
 
   // Replace account numbers
-  anonymized = anonymized.replace(/\bAccount \d{10,}\b/g, 'Account [REDACTED]');
+  anonymized = anonymized.replace(/\bAccount \d{10,}\b/g, '[ACCOUNT_NUMBER]');
 
   // Replace transaction IDs
   anonymized = anonymized.replace(/\b[A-Z]{3}-\d{4}-\d{6}\b/g, '[TRANSACTION_ID]');
@@ -72,7 +72,7 @@ export const anonymizeMessage = (message) => {
   return {
     ts: message.ts,
     user: hashUserId(message.user),
-    username: '[REDACTED]', // Redact the username completely
+    username: '[USERNAME]', // Redact the username completely
     channel: message.channel,
     text: anonymizeText(message.text),
     reactions: message.reactions || [],

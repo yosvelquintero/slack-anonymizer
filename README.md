@@ -59,7 +59,7 @@ The application provides robust anonymization of sensitive information:
 ### User Identity Protection
 
 - **User IDs**: `U0A1B2C3D` → `user_a1b2c3d4` (SHA-256 hashed)
-- **Usernames**: `john.doe` → `[REDACTED]`
+- **Usernames**: `john.doe` → `[USERNAME]`
 
 ### Personal Information
 
@@ -70,7 +70,7 @@ The application provides robust anonymization of sensitive information:
 ### Financial Information
 
 - **Credit Card Numbers**: `4111-1111-1111-1111` → `[CREDIT_CARD]`
-- **Account Numbers**: `Account 9876543210` → `Account [REDACTED]`
+- **Account Numbers**: `Account 9876543210` → `[ACCOUNT_NUMBER]`
 - **Large Amounts**: `$150,000` → `[AMOUNT]`
 - **Transaction IDs**: `TXN-2024-001234` → `[TRANSACTION_ID]`
 

@@ -50,6 +50,8 @@ The API includes comprehensive documentation accessible via Swagger UI:
 - **Development**: http://localhost:3000/docs
 - **OpenAPI Spec**: http://localhost:3000/doc
 
+![Swagger UI Interface](SwaggerScreenshot.png)
+
 ## Anonymization Features
 
 The application provides robust anonymization of sensitive information:

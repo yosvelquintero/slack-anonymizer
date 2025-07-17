@@ -56,17 +56,30 @@ The API includes comprehensive documentation accessible via Swagger UI:
 
 The application provides robust anonymization of sensitive information:
 
+### User Identity Protection
+
+- **User IDs**: `U0A1B2C3D` → `user_a1b2c3d4` (SHA-256 hashed)
+- **Usernames**: `john.doe` → `[REDACTED]`
+
+### Personal Information
+
 - **Email Addresses**: `john.doe@company.com` → `[EMAIL]`
 - **Phone Numbers**: `(555) 987-6543`, `555-123-4567` → `[PHONE]`
-- **Credit Card Numbers**: `4111-1111-1111-1111` → `[CREDIT_CARD]`
 - **Social Security Numbers**: `123-45-6789` → `[SSN]`
+
+### Financial Information
+
+- **Credit Card Numbers**: `4111-1111-1111-1111` → `[CREDIT_CARD]`
+- **Account Numbers**: `Account 9876543210` → `Account [REDACTED]`
+- **Large Amounts**: `$150,000` → `[AMOUNT]`
+- **Transaction IDs**: `TXN-2024-001234` → `[TRANSACTION_ID]`
+
+### Technical Information
+
 - **IP Addresses**: `192.168.1.100` → `[IP_ADDRESS]`
 - **URLs**: `https://example.com` → `[URL]`
 - **SSH Keys**: `ssh-rsa AAAAB3NzaC1yc2E...` → `[SSH_KEY]`
 - **Internal Servers**: `server.company.com` → `[INTERNAL_SERVER]`
-- **Large Amounts**: `$150,000` → `[AMOUNT]`
-- **Account Numbers**: `Account 9876543210` → `Account [REDACTED]`
-- **Transaction IDs**: `TXN-2024-001234` → `[TRANSACTION_ID]`
 
 ## Testing
 
